@@ -284,6 +284,7 @@ assign [class="(?i)(?:thunar)"]  → $ws4
 assign [class="(?i)(?:discord)"]  → $ws8
 assign [class="(?i)(?:ferdi)"]  → $ws8
 assign [class="(?i)(?:notion)"]  → $ws9
+assign [class="(?i)(?:min)"]  → $ws9
 assign [class="(?i)(?:font-manager)"]  → $ws10
 assign [class="(?i)(?:xfce4-settings-manager)"]  → $ws10
 assign [class="(?i)(?:stacer)"]  → $ws10
