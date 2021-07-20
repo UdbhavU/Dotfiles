@@ -9,6 +9,10 @@ set tabstop=2                           "the width of a tab
 set shiftwidth=2                        "the width for indent
 set t_Co=256                            " Support 256 colors
 set ruler		              			" Show the cursor position all the time
+let g:python_host_prog = '/usr/bin/python2' " ---------- Set python 2 provider
+function! DoRemote(arg)
+  UpdateRemotePlugins
+endfunction
 filetype off							" required to be off for loading plugins
 call plug#begin(stdpath('data'),'/plugged')
   Plug 'tpope/vim-sensible'
@@ -34,14 +38,11 @@ call plug#begin(stdpath('data'),'/plugged')
   Plug 'junegunn/vim-easy-align'
   Plug 'wellle/targets.vim'
   Plug 'terryma/vim-multiple-cursors'
-  Plug 'repeat.vim'
   Plug 'neomake/neomake'
   Plug 'kassio/neoterm'
   Plug 'sjl/gundo.vim'
   Plug 'chrisbra/NrrwRgn'
-  Plug 'Mark--Karkat'
  Plug 'asins/vimcdoc'
-  Plug 'ccvext.vim'
   "Plug 'lilydjwg/fcitx.vim'
   Plug 'junegunn/vim-github-dashboard'
 " documentation
@@ -55,7 +56,6 @@ call plug#begin(stdpath('data'),'/plugged')
   Plug 'ctrlpvim/ctrlp.vim'
   Plug 'wesleyche/SrcExpl'
   Plug 'majutsushi/tagbar'
-  Plug 'taglist.vim'
   Plug 'rizzatti/dash.vim'
   Plug 'eugen0329/vim-esearch'
 " c/c++
