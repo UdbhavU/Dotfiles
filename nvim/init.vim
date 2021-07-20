@@ -15,6 +15,7 @@ function! DoRemote(arg)
 endfunction
 filetype off							" required to be off for loading plugins
 call plug#begin(stdpath('data'),'/plugged')
+	Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'tpope/vim-sensible'
   Plug 'mhinz/vim-startify'
   Plug 'Yggdroot/indentLine'
