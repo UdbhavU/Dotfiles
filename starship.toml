@@ -1,4 +1,4 @@
-format = "$all"
+format = """$all"""
 scan_timeout = 30
 command_timeout = 500
 add_newline = false
@@ -15,8 +15,8 @@ discharging_symbol = "💀 "
 
 [character]
 format = '$symbol '
-success_symbol = '[](bold green)'
-error_symbol = '[](bold red)'
+success_symbol = '[](bold green)'
+error_symbol = '[](bold red)'
 vicmd_symbol = '[](bold green)'
 disabled = false
 
