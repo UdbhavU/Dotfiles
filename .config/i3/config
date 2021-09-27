@@ -5,12 +5,15 @@
 #for_window [class="Alacritty"] move scratchpad, move position 150 150, resize set 1700 800;
 #bindsym Mod1+space [class="Alacritty"] scratchpad show;
 
+#exec_always --no-startup-id $HOME/.config/polybar/i3wmthemer_bar_launch.sh
 # border & title
-for_window [class="^.*"] border pixel 1, title_format "<b> %class >> %title </b>"
-
+for_window [class="^.*"] border pixel 0, title_format "<b> %class >> %title </b>"
+smart_borders on
+smart_borders no_gaps
+border_radius 15
 # gaps
 gaps inner 8
-gaps outer 0 
+gaps outer 0
 
 # font
 font pango:SauceCodePro Nerd Font Mono 11
@@ -34,9 +37,12 @@ set $up l
 set $down k
 set $left j
 set $right semicolon
+set $rofi_theme_main "~/.local/share/rofi/themes/c64.rasi"
+set $rofi_theme_power "~/.local/share/rofi/themes/purple.rasi"
+set $rofi_theme_utility "~/.local/share/rofi/themes/Arc-Dark.rasi"
 
 # define names for workspaces
-set $ws1    "  Alacritty"
+set $ws1    "  Terminal"
 set $ws2    "  Code "
 set $ws3    "  Internet "
 set $ws4    "  Files "
@@ -49,7 +55,8 @@ set $ws10   "  Settings "
 set $ws11   "  Qt Development "
 set $ws12   "  VM "
 set $ws13   "  Android Studio"
-set $ws14   "  Kitty"
+set $ws14   "  Atom"
+set $ws15   "Emacs"
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -88,15 +95,24 @@ exec --no-startup-id xfsettingsd
 
 
 #############         Bindings           ##################
-#############           rofi             ##################  
-bindsym $mod+x exec --no-startup-id ~/.config/rofi/powermenu/powermenu.sh
-bindsym Control+space exec --no-startup-id ~/.config/rofi/launchers/text/launcher.sh 
-bindsym $mod+F1 exec --no-startup-id ~/.config/rofi/launchers/slate/launcher.sh 
+#############           rofi             ##################
+#bindsym $mod+x exec --no-startup-id ~/.config/rofi/powermenu/powermenu.sh
+bindsym $mod+x exec --no-startup-id ~/script/rofi-tools/rofi-power "i3-msg exit"
+
+#bindsym Control+space exec --no-startup-id ~/.config/rofi/launchers/text/launcher.sh
+bindsym Control+space exec --no-startup-id rofi -show run -theme $rofi_theme_utility
+
+bindsym Control+F4 exec --no-startup-id ~/script/rofi-scripts/monitor_layout.sh
+#bindsym $mod+F1 exec --no-startup-id ~/.config/rofi/launchers/slate/launcher.sh
+
 
 # kill focused window
 bindsym $Mod+Shift+q kill
 bindsym Mod1+q kill
 bindsym Mod1+F4 kill
+
+
+
 
 
 # Enter fullscreen mode for the focused container
@@ -106,7 +122,8 @@ bindsym Mod1+f fullscreen toggle
 
 # core
 bindsym $Mod+w          exec --no-startup-id exo-open --launch WebBrowser
-bindsym $Mod+f          exec --no-startup-id exo-open --launch FileManager
+bindsym $Mod+f          exec --no-startup-id exec rofi -modi "finder:~/script/rofi-scripts/rofi-finder/finder.sh" -show finder -theme $rofi_theme_main 
+bindsym $Mod+Shift+f    exec --no-startup-id exec rofi -modi "file:~/script/rofi-scripts/mode-scripts/rofi-file-browser.sh" -show file -theme $rofi_theme_power 
 #bindsym $Mod+t          exec --no-startup-id exo-open --launch TerminalEmulator
 bindsym $Mod+Return     exec --no-startup-id exec alacritty
 bindsym $Mod+Shift+Return     exec --no-startup-id exec kitty
@@ -147,6 +164,7 @@ bindsym $Mod+0 workspace $ws10
 bindsym $Mod+Mod1+1 workspace $ws11
 bindsym $Mod+Mod1+2 workspace $ws12
 bindsym $Mod+Mod1+3 workspace $ws13
+bindsym $Mod+Mod1+4 workspace $ws15
 bindsym Mod1+shift+1 workspace $ws14
 # switch to workspace - numpad alternatives
 bindsym $mod+Mod2+KP_1 workspace $ws1
@@ -238,25 +256,29 @@ bindsym Mod1+Left  resize shrink width  10 px or 1 ppt
 bindsym Mod1+Right resize grow   width  10 px or 1 ppt
 
 # layout toggle, keycode 23 is Tab
-bindcode Mod1+23 layout toggle tabbed split
-bindcode $Mod+23 layout toggle splitv splith
+#bindcode Mod1+23 layout toggle tabbed split
+#bindcode $Mod+23 layout toggle splitv splith
 
 # switch to workspace with urgent window
 for_window [urgent="latest"] focus
 focus_on_window_activation   focus
 
 # container layout
-bindsym $Mod+h split h
-bindsym $Mod+v split v
+bindsym $Mod+h split h;exec notify-send 'tile Horizontally'
+bindsym $Mod+v split v;exec notify-send 'tile Vertically'
 bindsym $Mod+Shift+t layout tabbed
 bindsym $Mod+Shift+s layout stacking
 bindsym $Mod+Shift+h layout toggle split
 
+
+bindsym $mod+Tab workspace next
+bindsym $mod+Shift+Tab workspace prev
+
 default_orientation horizontal
 
 ################ monitor ##################
-bindsym $mod+m move workspace to output left
 
+bindsym $mod+m move workspace to output right 
 ###############      Border & Gaps     ###############
 
 new_window normal
@@ -285,11 +307,12 @@ bindsym $Mod+Control+Shift+minus gaps outer all     minus 5
 
 # assign applications to specific workspace
 
-assign [class="(?i)(?:alacritty)"] → $ws1
+#assign [class="(?i)(?:alacritty)"] → $ws1
 assign [class="(?i)(?:code)"]   → $ws2
 assign [class="(?i)(?:firefox)"] → $ws3
 assign [class="(?i)(?:brave)"] → $ws3
 assign [class="(?i)(?:thunar)"]  → $ws4
+assign [class="(?i)(?:Clementine)"] → $ws6
 assign [class="(?i)(?:discord)"]  → $ws8
 assign [class="(?i)(?:ferdi)"]  → $ws8
 assign [class="(?i)(?:notion)"]  → $ws9
@@ -300,13 +323,18 @@ assign [class="(?i)(?:stacer)"]  → $ws10
 assign [class="(?i)(?:qtcreator)"] → $ws11
 assign [class="(?i)(?:virtualbox)"] → $ws12
 assign [class="(?i)(?:jetbrains-studio)"] → $ws13
-assign [class="(?i)(?:kitty)"] → $ws14
+assign [class="(?i)(?:kitty)"] → $ws1
+assign [class="(?i)(?:Emacs)"] → $ws15
+assign [class="(?i)(?:Virt-manager)"] → $ws12
+assign [class="(?i)(?:Atom)"] → $ws14
 
+for_window [class="Alacritty"] move scratchpad, move position 150 150, resize set 1700 800;
 
 # focus, floating, & sticky
 for_window [class="(?i)(?:qt5ct|pinentry)"]          floating enable, focus
 for_window [title="(?i)(?:copying|deleting|moving)"] floating enable
 for_window [window_role="(?i)(?:pop-up|setup)"]      floating enable
+for_window [class="thunar"] floating enable
 
 popup_during_fullscreen smart
 

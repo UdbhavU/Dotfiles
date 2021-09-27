@@ -12,7 +12,7 @@
     # set spacevim theme. by default colorscheme layer is not loaded,
     # if you want to use more colorscheme, please load the colorscheme
     # layer
-    colorscheme = "material"
+    colorscheme = "Archery"
     colorscheme_bg = "dark"
     # Disable guicolors in basic mode, many terminal do not support 24bit
     # true colors
@@ -27,13 +27,28 @@
     guifont = "SauceCodePro Nerd Font Mono"
 # Enable autocomplete layer
 [[layers]]
-name = 'autocomplete'
-auto_completion_return_key_behavior = "complete"
-auto_completion_tab_key_behavior = "smart"
+  name = "autocomplete"
+  auto_completion_return_key_behavior = "nil"
+  auto_completion_tab_key_behavior = "smart"
+  auto_completion_delay = 200
+  auto_completion_complete_with_key_sequence = "nil"
+  auto_completion_complete_with_key_sequence_delay = 0.1
+
+
+#[[layers]]
+#name = 'autocomplete'
+#auto_completion_return_key_behavior = "complete"
+#auto_completion_tab_key_behavior = "smart"
 [[layers]]
   name = "lsp"
   filetypes = [
-   "java"
+   "java",
+   "rust",
+   "cpp",
+   "c",
+   "html",
+   "python"
+
   ]
   [layers.override_cmd]
    java = [
@@ -51,6 +66,11 @@ auto_completion_tab_key_behavior = "smart"
    "~/.local/share/languageServer/javaLS/config_linux",
    "-data"
    ]
+  rust =['rustup', 'run', 'nightly', 'rls']
+  cpp = ['clangd']
+  c = ['clangd']
+  html = ['html-languageserver', '--stdio']
+  python =	['pyls']
 [[layers]]
 name = 'shell'
 default_position = 'top'
@@ -59,6 +79,15 @@ default_height = 30
 [[layers]]
   name = "lang#c"
   enable_clang_syntax_highlight = true
+  clang_executable = "/usr/bin/clang"
+  clang_flag = ['-I/user/include']
+  format_on_save = true
+  
+  [layer.clang_std]
+    c = "c11"
+    cpp = "c++1z"
+
+
 
 [[layers]]
   name = 'lang#java'
@@ -70,4 +99,21 @@ default_height = 30
     '**/',
     ''
   ]
+
+[[layers]]
+    name = "lang#html"
+    user_emmet_leader_key = "<C-e>"
+
+[[layers]]
+  name = "lang#python"
+  python_file_head = [
+      '#!/usr/bin/env python',
+      '# -*- coding: utf-8 -*-',
+      '',
+      ''
+  ]
+  enable_typeinfo = true
+  format_on_save = true
+  python_interpreter = '/usr/bin/python'
+  enabled_linters = ['python', 'pylint']
 
